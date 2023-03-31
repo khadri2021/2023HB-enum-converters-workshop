@@ -3,16 +3,16 @@ package com.khadri.hibernate.main;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.khadri.hibernate.boot.registry.BootRegistryUtil;
 import com.khadri.hibernate.entities.Address;
 import com.khadri.hibernate.entities.Restuarent;
 import com.khadri.hibernate.enums.Size;
-import com.khadri.hibernate.session.BasicOperationSession;
 
 public class RestuarentMain {
 
 	public static void main(String[] args) throws Exception {
 
-		Session session = BasicOperationSession.getSession();
+		Session session = BootRegistryUtil.getSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -42,6 +42,6 @@ public class RestuarentMain {
 		session.save(rest);
 
 		txn.commit();
-		session.close();
+		BootRegistryUtil.closeObjects();
 	}
 }
