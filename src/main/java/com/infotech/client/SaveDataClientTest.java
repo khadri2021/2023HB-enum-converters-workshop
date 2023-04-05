@@ -14,6 +14,7 @@ import com.infotech.util.HibernateUtil;
 public class SaveDataClientTest {
 
 	public static void main(String[] args) {
+		
 	    try(Session session = HibernateUtil.getSessionFactory().openSession()) {
 	    	session.beginTransaction();
 	    	Employee employee= new Employee();
