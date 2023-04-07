@@ -12,21 +12,8 @@ public class SizeConverter implements AttributeConverter<Size, Character> {
 
 	@Override
 	public Character convertToDatabaseColumn(Size size) {
-		Character getSize = null;
-
-		if (Optional.ofNullable(size).isPresent()) {
-
-			if (size.equals(Size.SMALL)) {
-				getSize = 'S';
-			} else if (size.equals(Size.MEDIUM)) {
-				getSize = 'M';
-			} else if (size.equals(Size.LARGE)) {
-				getSize = 'L';
-			} else {
-				getSize = 'E';
-			}
-		}
-		return getSize;
+		return (size.equals(Size.SMALL)) ? 'S'
+				: (size.equals(Size.MEDIUM)) ? 'M' : (size.equals(Size.LARGE) ? 'L' : 'E');
 	}
 
 	@Override

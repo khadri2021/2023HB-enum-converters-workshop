@@ -15,15 +15,10 @@ public enum Size {
 	}
 
 	public static Size fromCharacterCode(Character size) {
-		if (size.equals('S')) {
-			return SMALL;
-		} else if (size.equals('M')) {
-			return MEDIUM;
-		} else if (size.equals('L')) {
-			return LARGE;
-		} else {
-			return EXTRA_LARGE;
-		}
+		return (size.equals('S')) ? SMALL
+			: (size.equals('M')) ? MEDIUM
+				: (size.equals('L') ? LARGE : EXTRA_LARGE);
+
 	}
 
 }
