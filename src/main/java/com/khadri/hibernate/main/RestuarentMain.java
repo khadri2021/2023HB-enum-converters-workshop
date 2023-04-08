@@ -12,7 +12,8 @@ public class RestuarentMain {
 
 	public static void main(String[] args) throws Exception {
 
-		Session session = StandardServiceRegistryUtil.getSession();
+		Class<?> classObj1 = Restuarent.class;
+		Session session = StandardServiceRegistryUtil.createSession(classObj1);
 
 		Transaction txn = session.beginTransaction();
 
@@ -42,6 +43,7 @@ public class RestuarentMain {
 		session.save(rest);
 
 		txn.commit();
-		session.close();
+
+		StandardServiceRegistryUtil.closeResources();
 	}
 }

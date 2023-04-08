@@ -2,31 +2,38 @@ package com.khadri.hibernate.boot.registry;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import com.khadri.hibernate.entities.Restuarent;
-
 public class StandardServiceRegistryUtil {
 	static SessionFactory factory;
 	static Session session;
 
-	private static SessionFactory createSessionFactory() {
-		BootstrapServiceRegistry serviceRegistry = new BootstrapServiceRegistryBuilder().build();
-		StandardServiceRegistry standardServiceRegistry = new StandardServiceRegistryBuilder(serviceRegistry).build();
+	public static Session createSession(Class<?>... objects) {
 
-		Metadata metadata = new MetadataSources(standardServiceRegistry).addAnnotatedClass(Restuarent.class)
-				.buildMetadata();
+		BootstrapServiceRegistry bootstrapServiceRegistry = new BootstrapServiceRegistryBuilder().build();
 
-		return metadata.buildSessionFactory();
+		StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder(bootstrapServiceRegistry).build();
+
+		MetadataSources metadataSources = new MetadataSources(serviceRegistry);
+
+		for (int i = 0; i < objects.length; i++) {
+			metadataSources.addAnnotatedClass(objects[i]);
+		}
+
+		factory = metadataSources.buildMetadata().buildSessionFactory();
+
+		session = factory.openSession();
+
+		return session;
 	}
 
-	public static Session getSession() {
-		return createSessionFactory().openSession();
+	public static void closeResources() {
+		session.close();
+		factory.close();
 	}
 
 }
